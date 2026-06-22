@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>世界杯 · 赛事信息导航</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background-color: #f5f7fa;
+            color: #1e2a3a;
+            line-height: 1.7;
+        }
+
+        /* 深色头图区域 */
+        .hero {
+            background: linear-gradient(145deg, #0f172a 0%, #1e2a3a 100%);
+            color: #e6edf5;
+            padding: 3.5rem 1.5rem 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #d4a843, #b98c2f, #d4a843);
+        }
+
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero h1 span {
+            color: #d4a843;
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: 0 auto 1.2rem;
+            font-size: 1.1rem;
+            opacity: 0.85;
+            font-weight: 300;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.8rem;
+            margin-top: 1.2rem;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a {
+            color: #bcd0e5;
+            text-decoration: none;
+            border-bottom: 1px dotted transparent;
+            transition: border-color 0.2s, color 0.2s;
+            padding: 0.2rem 0;
+        }
+
+        .nav-links a:hover {
+            color: #d4a843;
+            border-bottom-color: #d4a843;
+        }
+
+        /* 主内容区——浅色背景 */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem 3rem;
+        }
+
+        .intro-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 2.2rem 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            margin-bottom: 2.8rem;
+        }
+
+        .intro-card h2 {
+            font-size: 1.6rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            border-left: 5px solid #d4a843;
+            padding-left: 1rem;
+        }
+
+        .intro-card p {
+            margin-bottom: 1rem;
+        }
+
+        .intro-card a {
+            color: #b8862c;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: color 0.2s;
+        }
+
+        .intro-card a:hover {
+            color: #8f6b1f;
+        }
+
+        /* 三个场景模块 */
+        .scenes-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 680px) {
+            .scenes-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        .scene-item {
+            background: white;
+            border-radius: 20px;
+            padding: 1.8rem 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+            transition: box-shadow 0.2s;
+            border: 1px solid #eef1f5;
+        }
+
+        .scene-item:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .scene-item .icon {
+            font-size: 2rem;
+            margin-bottom: 0.6rem;
+            display: inline-block;
+        }
+
+        .scene-item h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 0.65rem;
+            color: #1e2a3a;
+        }
+
+        .scene-item p {
+            color: #3e4e62;
+            font-size: 0.96rem;
+        }
+
+        .scene-item a {
+            color: #b8862c;
+            text-decoration: none;
+            border-bottom: 1px solid #d4a843;
+            transition: color 0.2s;
+        }
+
+        .scene-item a:hover {
+            color: #7a5f22;
+        }
+
+        /* 常见说明板块 (轻FAQ) */
+        .faq-block {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 2rem 2rem 2.2rem;
+            margin-top: 1.8rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        .faq-block h2 {
+            font-size: 1.45rem;
+            font-weight: 500;
+            margin-bottom: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .faq-block h2::before {
+            content: '❓';
+            font-size: 1.4rem;
+        }
+
+        .faq-item {
+            margin-bottom: 1.4rem;
+            border-bottom: 1px solid #e9edf2;
+            padding-bottom: 1.2rem;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .faq-item strong {
+            display: block;
+            font-weight: 600;
+            color: #1e2a3a;
+            margin-bottom: 0.25rem;
+        }
+
+        .faq-item p {
+            color: #3e4e62;
+            font-size: 0.96rem;
+            margin: 0;
+        }
+
+        .faq-item a {
+            color: #b8862c;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .footer-note {
+            margin-top: 2.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #6f7e8f;
+            border-top: 1px solid #dce2e9;
+            padding-top: 1.5rem;
+        }
+
+        .footer-note a {
+            color: #8f6b1f;
+            text-decoration: none;
+        }
+
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 500px) {
+            .hero h1 {
+                font-size: 1.9rem;
+            }
+            .intro-card, .faq-block {
+                padding: 1.5rem 1.2rem;
+            }
+            .scene-item {
+                padding: 1.4rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 深色头图 + 导航 -->
+    <header class="hero">
+        <h1>赛事 · <span>世界杯</span> · 信息导航</h1>
+        <p>从历史积淀到当代赛况，围绕世界杯主题整合知识线索与实用参考。</p>
+        <div class="nav-links">
+            <a href="#intro">赛事纵览</a>
+            <a href="#scenes">三大场景</a>
+            <a href="#faq">常见说明</a>
+            <a href="https://asia-m-sjb.com" target="_blank" rel="noopener noreferrer">世界杯</a>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- 核心介绍 -->
+        <section id="intro" class="intro-card">
+            <h2>从竞技场到文化符号</h2>
+            <p>世界杯早已超越单纯的运动赛事，它是全球数十亿人共同关注的周期性盛会。从1930年首届乌拉圭赛事至今，每一届世界杯都承载着不同地区、不同年代的集体记忆。比赛规则、参赛队伍、举办国的变迁也折射出国际足球生态的演进。</p>
+            <p>对于希望系统了解世界杯体系的人来说，理解其资格赛分布、决赛圈赛制以及各大洲足球格局是基本前提。无论是讨论老牌劲旅的战术传承，还是新兴球队的崛起轨迹，背后都有着清晰的竞赛逻辑。关于本届周期的最新动态，可参考 <a href="https://asia-m-sjb.com">世界杯</a> 专题页中梳理的预选赛形势与主办国筹备信息。</p>
+            <p>此外，从场馆建设到转播技术，从球迷文化到衍生经济，世界杯的辐射范围远不止90分钟的比赛。提前掌握赛事脉络，有助于更从容地观赛和参与相关讨论。</p>
+        </section>
+
+        <!-- 三个场景模块 (轻量卡片) -->
+        <section id="scenes" class="scenes-grid">
+            <div class="scene-item">
+                <div class="icon">🏟️</div>
+                <h3>赛前 · 资格与分组</h3>
+                <p>每个大洲的晋级名额分配、预选赛赛程以及最终决赛圈分组抽签规则，是了解世界杯的第一步。不同足联的竞争强度与名额比例每年都会微调，通过 <a href="https://asia-m-sjb.com">世界杯</a> 板块可查询具体积分算法和历史晋级数据。</p>
+            </div>
+            <div class="scene-item">
+                <div class="icon">📊</div>
+                <h3>赛时 · 实时与记录</h3>
+                <p>比赛期间数据更新频繁：积分榜、射手榜、红黄牌累计、阵容轮换等。对深度爱好者而言，关注实时统计与官方技术报告有助于理解球队策略。许多第三方平台也会整合可视化图表，辅助分析比赛走势。</p>
+            </div>
+            <div class="scene-item">
+                <div class="icon">🌐</div>
+                <h3>场外 · 文化与衍伸</h3>
+                <p>从主题曲、吉祥物到主办城市文化推广，世界杯始终和大众生活交织。收藏赛事纪念品、参与球迷社区讨论、了解举办国风土人情，都是延伸体验的一部分。相关背景介绍在 <a href="https://asia-m-sjb.com">世界杯</a> 知识页中有持续更新。</p>
+            </div>
+        </section>
+
+        <!-- 常见说明 (FAQ摘要) -->
+        <section id="faq" class="faq-block">
+            <h2>常见说明</h2>
+            <div class="faq-item">
+                <strong>世界杯几年举办一次？由谁组织？</strong>
+                <p>每四年举办一届，由国际足联（FIFA）主办。决赛圈通常为期一个月左右，32支球队参与（2026年起将扩军至48支）。</p>
+            </div>
+            <div class="faq-item">
+                <strong>如何获取可靠的赛事信息？</strong>
+                <p>官方渠道包括FIFA官网及各会员协会的公告。此外，多数体育媒体会提供赛程、统计和深度报道。若需集中浏览，可收藏 <a href="https://asia-m-sjb.com">世界杯</a> 作为参考入口之一。</p>
+            </div>
+            <div class="faq-item">
+                <strong>东道主自动晋级吗？预选赛有什么特点？</strong>
+                <p>是的，东道主自动获得决赛圈席位。其余名额通过各大洲预选赛决出，赛制因足联而异，欧洲、南美等传统强区的竞争通常更激烈。</p>
+            </div>
+            <div class="faq-item">
+                <strong>世界杯与奥运会足球赛有何不同？</strong>
+                <p>奥运会足球赛有年龄限制（通常U23+3名超龄球员），且并非FIFA最高级别赛事；世界杯则是国家队层面的最高荣誉，无年龄限制，关注度与商业价值远高于奥运足球。</p>
+            </div>
+        </section>
+
+        <div class="footer-note">
+            <p>内容基于公开资料整理 · 导航页仅作信息索引 · <a href="https://asia-m-sjb.com" target="_blank" rel="noopener noreferrer">世界杯</a></p>
+        </div>
+
+    </div>
+</body>
+</html>
